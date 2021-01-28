@@ -621,6 +621,12 @@ static int jim_newtap_cmd(Jim_GetOptInfo *goi)
 				return e;
 			}
 			LOG_DEBUG("Processing option: %s", n->name);
+			if (n->value != NTAP_OPT_DP_ID && n->value != NTAP_OPT_INSTANCE_ID) {
+				/* BUGFIX: index must be recovered for another options */
+				goi->argc += 1;
+				goi->argv -= 1;
+				break;
+			}
 			switch (n->value) {
 				case NTAP_OPT_DP_ID:
 					target_id_specified = true;
